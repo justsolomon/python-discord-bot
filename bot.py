@@ -78,7 +78,7 @@ async def reddit(ctx, arg):
 			embed = discord.Embed(title=f'Top posts in {arg}', description=f"Shows the hottest posts in the [{arg}](https://reddit.com/{arg}) subreddit", color=0x00ff00)
 			embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
 			for post in hot_posts:
-					embed.add_field(name=f'**{post.title}**', value=f':link:	{post.url} \n 	:arrow_up:	{post.score}	:speech_left:	{post.num_comments}', inline=False)
+					embed.add_field(name=f'**{post.title}**', value=f':link:[Link to post]({post.url}) \n :arrow_up:	{post.score}	:speech_left:	{post.num_comments}', inline=False)
 			await ctx.send(embed=embed)
 		except Exception as e:
 			await ctx.send('Subreddit not found.')
@@ -86,7 +86,7 @@ async def reddit(ctx, arg):
 @reddit.error
 async def reddit_error(ctx, error):
 	if isinstance(error, commands.MissingRequiredArgument):
-		await ctx.send('Please enter the name of the subreddit after the **!reddit** command \n\n Type **!reddit -help** for more info on the command')
+		await ctx.send('Please enter the name of the subreddit after the **!reddit** command \n\nType **!reddit -help** for more info on the command')
 
 # @client.command()
 # async def redditposts(ctx):
