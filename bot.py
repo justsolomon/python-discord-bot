@@ -2,11 +2,9 @@ import os
 import discord
 import requests
 from discord.ext import commands, tasks
-from dotenv import load_dotenv
-load_dotenv()
 
 import praw
-redditclient = praw.Reddit(client_id=os.getenv('reddit_id'), client_secret=os.getenv('reddit_secret'), user_agent=os.getenv('reddit_agent'))
+redditclient = praw.Reddit(client_id=os.environ['reddit_id'], client_secret=os.environ['reddit_secret'], user_agent=os.environ['reddit_agent'])
 
 
 # client = discord.Client()
@@ -90,4 +88,4 @@ async def redditposts(ctx):
 		embed.add_field(name=f'**{sub}**', value=f'!reddit {sub} - Returns posts in the [{sub}](https:reddit.com/{sub}) subreddit', inline=False)
 	await ctx.send(embed=embed)
 
-client.run(os.getenv('DISCORD_TOKEN'))
+client.run(os.environ['DISCORD_TOKEN'])
