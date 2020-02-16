@@ -64,7 +64,7 @@ async def on_member_join(member):
 
 @client.command()
 async def reddit(ctx, arg):
-	if arg == False:
+	if arg == '-help':
 		subreddit_list = ['r/coding', 'r/javascript', 'r/learnprogramming', 'r/programming', 'r/Python', 'r/webdev', 'r/web']
 		embed = discord.Embed(title='List of available subreddits', description="Shows a list of subreddits where posts can be gotten from", color=0x6b57f7)
 		embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
@@ -85,7 +85,7 @@ async def reddit(ctx, arg):
 @reddit.error
 async def reddit_error(ctx, error):
 	if isinstance(error, commands.MissingRequiredArgument):
-		await ctx.send('Please enter the name of the subreddit after the **!reddit** command')
+		await ctx.send('Please enter the name of the subreddit after the **!reddit** command | Type **!reddit -help** for more info on the command.')
 
 # @client.command()
 # async def redditposts(ctx):
