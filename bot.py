@@ -64,28 +64,36 @@ async def on_member_join(member):
 
 @client.command()
 async def reddit(ctx, arg):
-	try:
-		hot_posts = redditclient.subreddit(arg[2:]).hot(limit=10)
-		embed = discord.Embed(title=f'Top posts in {arg}', description=f"Shows the hottest posts in the [{arg}](https://reddit.com/{arg}) subreddit", color=0x00ff00)
+	if arg == False:
+		subreddit_list = ['r/coding', 'r/javascript', 'r/learnprogramming', 'r/programming', 'r/Python', 'r/webdev', 'r/web']
+		embed = discord.Embed(title='List of available subreddits', description="Shows a list of subreddits where posts can be gotten from", color=0x6b57f7)
 		embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
-		for post in hot_posts:
-				embed.add_field(name=f'**{post.title}**', value=f':link:	{post.url} \n 	:arrow_up:	{post.score}	:speech_left:	{post.num_comments}', inline=False)
+		for sub in subreddit_list:
+			embed.add_field(name=f'**{sub}**', value=f'!reddit {sub} - Returns posts in the [{sub}](https:reddit.com/{sub}) subreddit', inline=False)
 		await ctx.send(embed=embed)
-	except Exception as e:
-		await ctx.send('Subreddit not found.')
+	else:
+		try:
+			hot_posts = redditclient.subreddit(arg[2:]).hot(limit=10)
+			embed = discord.Embed(title=f'Top posts in {arg}', description=f"Shows the hottest posts in the [{arg}](https://reddit.com/{arg}) subreddit", color=0x00ff00)
+			embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
+			for post in hot_posts:
+					embed.add_field(name=f'**{post.title}**', value=f':link:	{post.url} \n 	:arrow_up:	{post.score}	:speech_left:	{post.num_comments}', inline=False)
+			await ctx.send(embed=embed)
+		except Exception as e:
+			await ctx.send('Subreddit not found.')
 
 @reddit.error
 async def reddit_error(ctx, error):
 	if isinstance(error, commands.MissingRequiredArgument):
 		await ctx.send('Please enter the name of the subreddit after the **!reddit** command')
 
-@client.command()
-async def redditposts(ctx):
-	subreddit_list = ['r/coding', 'r/javascript', 'r/learnprogramming', 'r/programming', 'r/Python', 'r/webdev', 'r/web']
-	embed = discord.Embed(title='List of available subreddits', description="Shows a list of subreddits where posts can be gotten from", color=0x6b57f7)
-	embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
-	for sub in subreddit_list:
-		embed.add_field(name=f'**{sub}**', value=f'!reddit {sub} - Returns posts in the [{sub}](https:reddit.com/{sub}) subreddit', inline=False)
-	await ctx.send(embed=embed)
+# @client.command()
+# async def redditposts(ctx):
+# 	subreddit_list = ['r/coding', 'r/javascript', 'r/learnprogramming', 'r/programming', 'r/Python', 'r/webdev', 'r/web']
+# 	embed = discord.Embed(title='List of available subreddits', description="Shows a list of subreddits where posts can be gotten from", color=0x6b57f7)
+# 	embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
+# 	for sub in subreddit_list:
+# 		embed.add_field(name=f'**{sub}**', value=f'!reddit {sub} - Returns posts in the [{sub}](https:reddit.com/{sub}) subreddit', inline=False)
+# 	await ctx.send(embed=embed)
 
 client.run(os.environ['DISCORD_TOKEN'])
