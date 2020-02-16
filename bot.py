@@ -9,15 +9,15 @@ redditclient = praw.Reddit(client_id=os.environ['reddit_id'], client_secret=os.e
 
 # client = discord.Client()
 client = commands.Bot(command_prefix = commands.when_mentioned_or("!"))
-todos = [];
+# todos = [];
+
+print(redditclient)
 
 @client.event
 async def on_ready():
 	guild = discord.utils.get(client.guilds, name='My Test Server')
 	print(f'We have logged in as {client.user}')
 	print(f'{client.user} is connected to {guild.name}(id: {guild.id})')
-	for member in guild.members:
-		print(member)
 
 
 # @client.event
@@ -67,6 +67,7 @@ async def on_member_join(member):
 @client.command()
 async def reddit(ctx, arg):
 	hot_posts = redditclient.subreddit(arg[2:]).hot(limit=10)
+	print(hot_posts)
 	embed = discord.Embed(title=f'Top posts in {arg}', description=f"Shows the hottest posts in the [{arg}](https://reddit.com/{arg}) subreddit", color=0x00ff00)
 	embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
 	for post in hot_posts:
