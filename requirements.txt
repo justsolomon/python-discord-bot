@@ -2,4 +2,3 @@ discord
 discord.py
 requests
 praw
-python-dotenv
