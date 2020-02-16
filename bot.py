@@ -11,8 +11,6 @@ redditclient = praw.Reddit(client_id=os.environ['reddit_id'], client_secret=os.e
 client = commands.Bot(command_prefix = commands.when_mentioned_or("!"))
 # todos = [];
 
-print(redditclient)
-
 @client.event
 async def on_ready():
 	guild = discord.utils.get(client.guilds, name='My Test Server')
@@ -66,14 +64,15 @@ async def on_member_join(member):
 
 @client.command()
 async def reddit(ctx, arg):
-	hot_posts = redditclient.subreddit(arg[2:]).hot(limit=10)
-	print(hot_posts)
-	embed = discord.Embed(title=f'Top posts in {arg}', description=f"Shows the hottest posts in the [{arg}](https://reddit.com/{arg}) subreddit", color=0x00ff00)
-	embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
-	for post in hot_posts:
-			print(post.title)
-			embed.add_field(name=f'**{post.title}**', value=f':link:	{post.url} \n 	:arrow_up:	{post.score}	:speech_left:	{post.num_comments}', inline=False)
-	await ctx.send(embed=embed)
+	try:
+		hot_posts = redditclient.subreddit(arg[2:]).hot(limit=10)
+		embed = discord.Embed(title=f'Top posts in {arg}', description=f"Shows the hottest posts in the [{arg}](https://reddit.com/{arg}) subreddit", color=0x00ff00)
+		embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
+		for post in hot_posts:
+				embed.add_field(name=f'**{post.title}**', value=f':link:	{post.url} \n 	:arrow_up:	{post.score}	:speech_left:	{post.num_comments}', inline=False)
+		await ctx.send(embed=embed)
+	except Exception as e:
+		await ctx.send('Subreddit not found.')
 
 @reddit.error
 async def reddit_error(ctx, error):
