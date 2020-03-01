@@ -107,6 +107,11 @@ async def task(ctx, arg):
 	if arg.startswith('remove'):
 		db.tasks.delete_one({'id': arg[7:]})
 		await ctx.send('Task deleted successfully.')
-
+	if arg == 'view':
+		allTasks = db.tasks.find({})
+		embed = discord.Embed(title='Tasks', description='Shows all tasks present in the database')
+		for eachTask in allTasks:
+			embed.add_field(name=f'{task.id}. {task.value}')
+		await ctx.send(embed=embed)
 
 client.run(os.environ['DISCORD_TOKEN'])
