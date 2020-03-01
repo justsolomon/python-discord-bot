@@ -2,3 +2,4 @@ discord
 discord.py
 requests
 praw
+psycopg2-binary
