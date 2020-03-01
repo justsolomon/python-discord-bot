@@ -105,8 +105,12 @@ async def task(ctx, arg):
 		count += 1
 		await ctx.send('Task added successfully.')
 	if arg.startswith('remove'):
-		db.tasks.delete_one({'id': arg[7:]})
-		await ctx.send('Task deleted successfully.')
+		if arg[7:] == 'all':
+			dbtasks.delete_many({})
+			await ctx.send('All tasks deleted successfully.')
+		else:
+			db.tasks.delete_one({'id': arg[7:]})
+			await ctx.send('Task deleted successfully.')
 	if arg == 'view':
 		allTasks = db.tasks.find({})
 		embed = discord.Embed(title='Tasks', description='Shows all tasks present in the database')
