@@ -1,11 +1,14 @@
 import os
 import discord
 import requests
+import psycopg2
 from discord.ext import commands, tasks
 
 import praw
 redditclient = praw.Reddit(client_id=os.environ['reddit_id'], client_secret=os.environ['reddit_secret'], user_agent=os.environ['reddit_agent'])
 
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 # client = discord.Client()
 client = commands.Bot(command_prefix = commands.when_mentioned_or("!"))
