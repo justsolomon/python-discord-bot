@@ -11,7 +11,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 
-mongoclient = pymongo.MongoClient(os.environ['mongodb_url'])
+mongoclient = MongoClient(os.environ['mongodb_url'])
 db = mongoclient.discord
 # client = discord.Client()
 client = commands.Bot(command_prefix = commands.when_mentioned_or("!"))
