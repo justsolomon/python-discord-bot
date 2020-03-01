@@ -103,6 +103,10 @@ async def task(ctx, arg):
 				'value' : arg[4:]
 			})
 		count += 1
+		await ctx.send('Task added successfully.')
+	if arg.startswith('remove'):
+		db.tasks.delete_one({'id': arg[7:]})
+		await ctx.send('Task deleted successfully.')
 
 
 client.run(os.environ['DISCORD_TOKEN'])
