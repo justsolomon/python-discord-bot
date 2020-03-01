@@ -93,13 +93,4 @@ async def reddit_error(ctx, error):
 	if isinstance(error, commands.MissingRequiredArgument):
 		await ctx.send('Please enter the name of the subreddit after the **!reddit** command \n\nType **!reddit -help** for more info on the command')
 
-# @client.command()
-# async def redditposts(ctx):
-# 	subreddit_list = ['r/coding', 'r/javascript', 'r/learnprogramming', 'r/programming', 'r/Python', 'r/webdev', 'r/web']
-# 	embed = discord.Embed(title='List of available subreddits', description="Shows a list of subreddits where posts can be gotten from", color=0x6b57f7)
-# 	embed.set_thumbnail(url='https://cdn2.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Reddit-512.png')
-# 	for sub in subreddit_list:
-# 		embed.add_field(name=f'**{sub}**', value=f'!reddit {sub} - Returns posts in the [{sub}](https:reddit.com/{sub}) subreddit', inline=False)
-# 	await ctx.send(embed=embed)
-
 client.run(os.environ['DISCORD_TOKEN'])
