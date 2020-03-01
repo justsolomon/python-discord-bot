@@ -97,6 +97,7 @@ async def reddit_error(ctx, error):
 count = 0
 @client.command()
 async def task(ctx, arg):
+	global count
 	if arg.startswith('add'):
 		db.tasks.insert_one({
 				'id' : count + 1,
