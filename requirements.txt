@@ -4,3 +4,4 @@ requests
 praw
 psycopg2-binary
 pymongo
+dnspython
