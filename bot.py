@@ -12,6 +12,7 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 
 mongoclient = pymongo.MongoClient(os.environ['mongodb_url'])
+db = mongoclient.discord
 # client = discord.Client()
 client = commands.Bot(command_prefix = commands.when_mentioned_or("!"))
 # todos = [];
@@ -92,5 +93,16 @@ async def reddit(ctx, arg):
 async def reddit_error(ctx, error):
 	if isinstance(error, commands.MissingRequiredArgument):
 		await ctx.send('Please enter the name of the subreddit after the **!reddit** command \n\nType **!reddit -help** for more info on the command')
+
+count = 0
+@client.command()
+async def task(ctx, arg):
+	if arg.startswith('add'):
+		db.tasks.insert_one({
+				'id' : count + 1,
+				'value' : arg[4:]
+			})
+		count += 1
+
 
 client.run(os.environ['DISCORD_TOKEN'])
