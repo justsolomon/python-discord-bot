@@ -71,8 +71,9 @@ async def reddit_error(ctx, error):
 
 count = 0
 @client.command()
-async def task(ctx, arg):
+async def task2(ctx, *, arg):
 	global count
+	db = mongoclient.discord
 	if arg.startswith('add'):
 		db.tasks.insert_one({
 				'id' : count + 1,
@@ -82,16 +83,20 @@ async def task(ctx, arg):
 		await ctx.send('Task added successfully.')
 	if arg.startswith('remove'):
 		if arg[7:] == 'all':
-			dbtasks.delete_many({})
+			db.tasks.delete_many({})
 			await ctx.send('All tasks deleted successfully.')
 		else:
-			db.tasks.delete_one({'id': arg[7:]})
+			db.tasks.delete_one({'id': int(arg[7:])})
 			await ctx.send('Task deleted successfully.')
 	if arg == 'view':
 		allTasks = db.tasks.find({})
-		embed = discord.Embed(title='Tasks', description='Shows all tasks present in the database')
-		for eachTask in allTasks:
-			embed.add_field(name=f'{task.id}. {task.value}')
-		await ctx.send(embed=embed)
+		result = '**Tasks**\n'
+		if allTasks.count() == 0:
+			result += '\nThere are no tasks available at the moment. Type !todo add <task> to add a task.'
+		else:
+			for eachTask in allTasks:
+				tasklist = list(eachTask.values())
+				result += f'\n{tasklist[1]}. {tasklist[2]}'
+		await ctx.send(result)
 
 client.run(os.environ['DISCORD_TOKEN'])
