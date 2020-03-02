@@ -13,38 +13,13 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 mongoclient = MongoClient(os.environ['mongodb_url'])
 db = mongoclient.discord
-# client = discord.Client()
 client = commands.Bot(command_prefix = commands.when_mentioned_or("!"))
-# todos = [];
 
 @client.event
 async def on_ready():
 	guild = discord.utils.get(client.guilds, name='My Test Server')
 	print(f'We have logged in as {client.user}')
 	print(f'{client.user} is connected to {guild.name}(id: {guild.id})')
-
-
-# @client.event
-# async def on_message(message):
-# 	if message.author == client.user:
-# 		return
-
-# 	if message.content.startswith('$add'):
-# 		todos.append(message.content[4:])
-# 		await message.channel.send(f'> **{message.content[4:]}** has been added successfully.')
-	
-# 	if message.content == '$view':
-# 		todolist = '';
-# 		for i in range(len(todos)):
-# 			todolist += f'{i}. {todos[i]}\n'
-# 		await message.channel.send(f'> {todolist}')
-	
-# 	if message.content.startswith('$remove'):
-# 		todos.remove(message.content[7:])
-# 		await message.channel.send(f'> **{message.content[7:]}** has been removed successfully.')
-
-# 	await client.process_commands(message)
-
 
 @client.command()
 async def random(ctx):
