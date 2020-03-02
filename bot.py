@@ -71,7 +71,7 @@ async def reddit_error(ctx, error):
 
 count = 0
 @client.command()
-async def task2(ctx, *, arg):
+async def task(ctx, *, arg):
 	global count
 	db = mongoclient.discord
 	if arg.startswith('add'):
